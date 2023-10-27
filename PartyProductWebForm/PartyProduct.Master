@@ -1,0 +1,65 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PartyProduct.master.cs" Inherits="PartyProductWebForm.PartyProduct" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .auto-style1 td {
+            padding: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            font: inherit;
+            color: inherit;
+        }
+
+        .auto-style1 {
+            width:100%;
+            font-size: 25px;
+            color: white;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+        }
+        #<% =ContentPlaceHolder1.ClientID %>{
+            display:flex;
+            justify-content:center;
+        }
+        #form1>div{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <table class="auto-style1">
+                <tr>
+                    <td style="color: lightblue">Invoice Module</td>
+                    <td><a href="<% =ResolveUrl("~/Party/PartyList.aspx") %>">Party</a></td>
+                    <td><a href="<% =ResolveUrl("~/Products/ProductList.aspx") %>">Product</a></td>
+                    <td><a href="<% =ResolveUrl("~/AssignParty/AssignPartyList.aspx") %>">Assign Party</a></td>
+                    <td><a href="<% =ResolveUrl("~/ProductRate/ProductRateList.aspx") %>">Product Rate</a></td>
+                    <td><a href="<% =ResolveUrl("~/Invoice/InvoiceList.aspx") %>">Invoice</a></td>
+                </tr>
+            </table>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
