@@ -59,21 +59,21 @@ namespace PartyProductWebForm.ProductRate
         protected void delBtn_Command(object sender, CommandEventArgs e)
         {
             int row = Int32.Parse(e.CommandArgument.ToString());
-            string id = GridView1.Rows[row].Cells[0].Text;
+            int id = Int32.Parse(GridView1.Rows[row].Cells[0].Text);
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = Global.con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_delete_product";
+                cmd.CommandText = "sp_delete_product_rate";
 
-                SqlParameter delID = new SqlParameter("@productID", System.Data.SqlDbType.Int);
+                SqlParameter delID = new SqlParameter("@id", System.Data.SqlDbType.Int);
                 delID.Direction = ParameterDirection.Input;
                 delID.Value = id;
                 cmd.Parameters.Add(delID);
                 Global.con.Open();
                 int read = cmd.ExecuteNonQuery();
-                Response.Write(read);
+                //Response.Write(read);
                 Global.con.Close();
                 ShowAllProductRate();
             }

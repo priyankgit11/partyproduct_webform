@@ -33,7 +33,7 @@
             <div class="container">
                 <asp:DropDownList ID="ProductDDl" runat="server"></asp:DropDownList>
                 <asp:TextBox ID="ProductRate" runat="server" TextMode="Number" placeholder="Rate" min="0"></asp:TextBox>
-                <asp:TextBox ID="RateDate" runat="server" TextMode="Date"></asp:TextBox>
+                <input type ="date" runat="server" id="ratedate" />
                 <asp:Button ID="Button1" runat="server" Text="Add" OnCommand="Button1_Command1" />
             </div>
         </div>

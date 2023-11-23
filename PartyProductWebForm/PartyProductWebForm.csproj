@@ -107,6 +107,7 @@
     <Content Include="AssignParty\AssignPartyList.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Invoice\InvoiceAdd.aspx" />
+    <Content Include="Invoice\InvoiceList.aspx" />
     <Content Include="Party\PartyAddEdit.aspx" />
     <Content Include="Party\PartyList.aspx" />
     <Content Include="ProductRate\ProductRateAddEdit.aspx" />
@@ -140,6 +141,13 @@
     </Compile>
     <Compile Include="Invoice\InvoiceAdd.aspx.designer.cs">
       <DependentUpon>InvoiceAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Invoice\InvoiceList.aspx.cs">
+      <DependentUpon>InvoiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Invoice\InvoiceList.aspx.designer.cs">
+      <DependentUpon>InvoiceList.aspx</DependentUpon>
     </Compile>
     <Compile Include="PartyProduct.Master.cs">
       <DependentUpon>PartyProduct.Master</DependentUpon>

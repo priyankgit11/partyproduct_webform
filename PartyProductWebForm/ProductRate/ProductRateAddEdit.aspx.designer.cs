@@ -51,13 +51,13 @@ namespace PartyProductWebForm.ProductRate
         protected global::System.Web.UI.WebControls.TextBox ProductRate;
 
         /// <summary>
-        /// RateDate control.
+        /// ratedate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RateDate;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl ratedate;
 
         /// <summary>
         /// Button1 control.
