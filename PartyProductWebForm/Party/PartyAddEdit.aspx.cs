@@ -11,7 +11,7 @@ namespace PartyProductWebForm.Party
 {
     public partial class PartyAddEdit : System.Web.UI.Page
     {
-        string method="", id="", name = "";
+        string method = "", id = "", name = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             lblParty.ForeColor = System.Drawing.Color.Black;
@@ -41,48 +41,67 @@ namespace PartyProductWebForm.Party
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = Global.con;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "sp_update_party"; 
-                    // Add the input parameter and set its properties.
-                    SqlParameter editName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar, 50);
-                    editName.Direction = ParameterDirection.Input;
-                    editName.Value = txtName;
-                    SqlParameter editID = new SqlParameter("@partyID", System.Data.SqlDbType.Int);
-                    editID.Direction = ParameterDirection.Input;
-                    editID.Value = id;
-                    cmd.Parameters.Add(editName);
-                    cmd.Parameters.Add(editID);
+                    SqlCommand tmpCmd = new SqlCommand();
+                    SqlParameter checkName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar, 50);
+                    checkName.Direction = ParameterDirection.Input;
+                    checkName.Value = txtName.Trim() ;
+                    tmpCmd.Connection = Global.con;
+                    tmpCmd.CommandType = CommandType.StoredProcedure;
+                    tmpCmd.CommandText = "sp_check_party_exists";
+                    tmpCmd.Parameters.Add(checkName);
                     Global.con.Open();
-                    cmd.ExecuteNonQuery();
+                    var output = tmpCmd.ExecuteScalar();
                     Global.con.Close();
-                    lblParty.Text = "Data Updated Successfully";
+                    if ((string)output == "FALSE")
+                    {
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection = Global.con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "sp_update_party";
+                        // Add the input parameter and set its properties.
+                        SqlParameter editName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar, 50);
+                        editName.Direction = ParameterDirection.Input;
+                        editName.Value = txtName.Trim() ;
+                        SqlParameter editID = new SqlParameter("@partyID", System.Data.SqlDbType.Int);
+                        editID.Direction = ParameterDirection.Input;
+                        editID.Value = id;
+                        cmd.Parameters.Add(editName);
+                        cmd.Parameters.Add(editID);
+                        Global.con.Open();
+                        cmd.ExecuteNonQuery();
+                        Global.con.Close();
+                        lblParty.Text = "Data Updated Successfully";
+                    }
+                    else
+                    {
+                        lblParty.Text = "Enter Unique Party Name!!";
+                        lblParty.ForeColor = System.Drawing.Color.Red;
+                    }
                 }
                 catch (Exception ex)
                 {
                     Response.Write(ex.Message.ToString());
-                    
+
                 }
                 finally
                 {
                     Global.con.Close();
                 }
-            }  
+            }
             else if (txtName != String.Empty)
             {
                 try
                 {
                     SqlCommand cmd = new SqlCommand();
                     SqlCommand tmpCmd = new SqlCommand();
-                    SqlParameter checkName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar,50);
+                    SqlParameter checkName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar, 50);
                     checkName.Direction = ParameterDirection.Input;
-                    checkName.Value = txtName;
+                    checkName.Value = txtName.Trim() ;
                     tmpCmd.Connection = Global.con;
                     tmpCmd.CommandType = CommandType.StoredProcedure;
                     tmpCmd.CommandText = "sp_check_party_exists";
                     tmpCmd.Parameters.Add(checkName);
-                    Global.con.Open() ;
+                    Global.con.Open();
                     var output = tmpCmd.ExecuteScalar();
                     Global.con.Close();
 
@@ -90,7 +109,7 @@ namespace PartyProductWebForm.Party
                     {
                         SqlParameter addName = new SqlParameter("@partyName", System.Data.SqlDbType.VarChar, 50);
                         addName.Direction = ParameterDirection.Input;
-                        addName.Value = txtName;
+                        addName.Value = txtName.Trim() ;
                         cmd.Connection = Global.con;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.CommandText = "sp_store_party";
@@ -106,7 +125,7 @@ namespace PartyProductWebForm.Party
                         lblParty.ForeColor = System.Drawing.Color.Red;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Response.Write(ex.Message.ToString());
                 }

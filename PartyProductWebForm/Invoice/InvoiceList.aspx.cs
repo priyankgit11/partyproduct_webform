@@ -44,7 +44,6 @@ namespace PartyProductWebForm.Invoice
         {
             Response.Redirect(ResolveUrl("~/Invoice/InvoiceAdd.aspx"));
         }
-
         protected void viewBtn_Command(object sender, CommandEventArgs e)
         {
             int row = Int32.Parse(e.CommandArgument.ToString());

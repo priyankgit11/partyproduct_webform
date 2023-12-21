@@ -32,17 +32,16 @@ namespace PartyProductWebForm.ProductRate
                 ProductRate.Text = rate.ToString();
                 //ratedate.Value = "2012/10/01";
                 ratedate.Value = DateTime.Parse(date).ToString("yyyy-MM-dd");
-
             }
             lblAssignParty.ForeColor = System.Drawing.Color.Black;
             if (method == "EditProductRate" || Button1.Text == "Edit")
             {
-                secTitle.Text = "Party Rate Edit";
+                secTitle.Text = "Product Rate Edit";
                 Button1.Text = "Edit";
             }
             else
             {
-                secTitle.Text = "Party Rate Add";
+                secTitle.Text = "Product Rate Add";
                 Button1.Text = "Add";
             }
         }

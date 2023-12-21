@@ -35,7 +35,6 @@ namespace PartyProductWebForm.Party
                 GridView1.DataSource = cmd.ExecuteReader();
                 GridView1.DataBind();
                 Global.con.Close();
-
             }
             catch (Exception ex)
             {
@@ -75,7 +74,7 @@ namespace PartyProductWebForm.Party
                 cmd.Parameters.Add(delID);
                 Global.con.Open();
                 int read = cmd.ExecuteNonQuery();
-                Response.Write(read);
+                //Response.Write(read);
                 Global.con.Close();
                 ShowAllParty();
             }

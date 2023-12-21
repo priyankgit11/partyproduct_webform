@@ -16,14 +16,15 @@ namespace PartyProductWebForm.Products
         {
             lblProduct.ForeColor = System.Drawing.Color.Black;
             method = Request.QueryString["method"];
-            id = Request.QueryString["id"];
-            name = Request.QueryString["name"];
+
             if (method == null)
             {
                 Button1.Text = "Add";
             }
             else
             {
+                id = Request.QueryString["id"];
+                name = Request.QueryString["name"];
                 Button1.Text = "Edit";
             }
             if (PreviousPage != null)
@@ -41,23 +42,44 @@ namespace PartyProductWebForm.Products
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = Global.con;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "sp_update_product";
-                    // Add the input parameter and set its properties.
-                    SqlParameter editName = new SqlParameter("@productName", System.Data.SqlDbType.VarChar, 50);
-                    editName.Direction = ParameterDirection.Input;
-                    editName.Value = txtName;
-                    SqlParameter editID = new SqlParameter("@productID", System.Data.SqlDbType.Int);
-                    editID.Direction = ParameterDirection.Input;
-                    editID.Value = id;
-                    cmd.Parameters.Add(editName);
-                    cmd.Parameters.Add(editID);
+                    SqlCommand tmpCmd = new SqlCommand();
+                    SqlParameter checkName = new SqlParameter("@productName", System.Data.SqlDbType.VarChar, 50);
+                    checkName.Direction = ParameterDirection.Input;
+                    checkName.Value = txtName;
+                    tmpCmd.Connection = Global.con;
+                    tmpCmd.CommandType = CommandType.StoredProcedure;
+                    tmpCmd.CommandText = "sp_check_product_exists";
+                    tmpCmd.Parameters.Add(checkName);
                     Global.con.Open();
-                    cmd.ExecuteNonQuery();
+                    var output = tmpCmd.ExecuteScalar();
                     Global.con.Close();
-                    lblProduct.Text = "Data Updated Successfully";
+
+                    if ((string)output == "FALSE")
+                    {
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection = Global.con;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "sp_update_product";
+                        // Add the input parameter and set its properties.
+                        SqlParameter editName = new SqlParameter("@productName", System.Data.SqlDbType.VarChar, 50);
+                        editName.Direction = ParameterDirection.Input;
+                        editName.Value = txtName;
+                        SqlParameter editID = new SqlParameter("@productID", System.Data.SqlDbType.Int);
+                        editID.Direction = ParameterDirection.Input;
+                        editID.Value = id;
+                        cmd.Parameters.Add(editName);
+                        cmd.Parameters.Add(editID);
+                        Global.con.Open();
+                        cmd.ExecuteNonQuery();
+                        Global.con.Close();
+                        lblProduct.Text = "Data Updated Successfully";
+
+                    }
+                    else
+                    {
+                        lblProduct.Text = "Enter Unique Party Name!!";
+                        lblProduct.ForeColor = System.Drawing.Color.Red;
+                    }
                 }
                 catch (Exception ex)
                 {
